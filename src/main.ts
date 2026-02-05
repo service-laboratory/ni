@@ -1,7 +1,7 @@
-// import "./style.css";
+import "./style.css";
 
-import application from "app/application";
-import { DomPlugin, StorePlugin } from "core/plugins";
-import run from "core/run";
+import { Users } from "users/users";
 
-run(application, { dom: new DomPlugin(), store: new StorePlugin() }, { id: "start" });
+const users = new Users(document.getElementById("app") as HTMLElement);
+
+users.mount();
