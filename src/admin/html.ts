@@ -1,8 +1,10 @@
-import type { UserType } from "./types";
+import type { RoleType, UserType } from "./types";
 
 const templateIDs = {
   userTableContainerID: "user-table-container",
   paginationContainerID: "pagination-container",
+  roleTableContainerID: "role-table-container",
+  rolePaginationContainerID: "role-pagination-container",
 };
 
 const html = {
@@ -101,6 +103,44 @@ const html = {
           <td>
             <button class="edit-button" data-id="${user.id}">Edit</button>
             <button class="delete-button" data-id="${user.id}">Delete</button>
+          </td>
+        </tr>`,
+      )
+      .join(""),
+  getRolesContainerHTML: (searchQuery: string) => `<div class="user-container">
+    <div class="user-header">
+      <h1>Role List</h1>
+      <div class="search-container">
+        <input type="text" id="role-search-input" placeholder="Search roles..." value="${searchQuery}">
+      </div>
+      </div>
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Permissions</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="${templateIDs.roleTableContainerID}" class="loading">
+        </tbody>
+      </table>
+      <div id="${templateIDs.rolePaginationContainerID}" class="pagination">
+      </div>
+      <button id="reset-roles">reset</button>
+    </div>
+  </div>`,
+  getRoleRowsHTML: (roles: RoleType[], searchQuery: string) =>
+    roles
+      .map(
+        (role) => `<tr>
+          <td>${role.id}</td>
+          <td>${html.showSearchResultItem(searchQuery, role.name)}</td>
+          <td>${role.permissions.length}</td>
+          <td>
+            <button class="edit-button" data-id="${role.id}">Edit</button>
+            <button class="delete-button" data-id="${role.id}">Delete</button>
           </td>
         </tr>`,
       )
